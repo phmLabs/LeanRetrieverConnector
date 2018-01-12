@@ -46,7 +46,16 @@ class LeanRetrieverClient implements HttpClient
 
         $response = $client->send($leanRequest);
 
-        var_dump($response);
+        $plainBody = (string)$response->getBody();
+        $responseObj = json_decode($plainBody);
+
+        if ($responseObj->status == 'error') {
+            throw new \Exception($responseObj->message);
+        }
+
+        $browserResponse = unserialize($responseObj->serializedResponse);
+
+        return $browserResponse;
     }
 
     public function sendRequests(array $requests)
@@ -68,6 +77,11 @@ class LeanRetrieverClient implements HttpClient
     public function setOption($key, $value)
     {
         throw new \RuntimeException('This function is not implemented yet');
+    }
+
+    public function close()
+    {
+
     }
 
 }
