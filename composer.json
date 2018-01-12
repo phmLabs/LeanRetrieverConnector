@@ -9,7 +9,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Leankoala\\RetrieverConnector\\": "src"
+      "Leankoala\\RetrieverConnector\\": "src/"
     }
   }
 }
