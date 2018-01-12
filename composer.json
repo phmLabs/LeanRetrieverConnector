@@ -1,0 +1,14 @@
+{
+  "name": "leankoala/retrieverconnector",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": ">= 5.4.0",
+    "phmlabs/httpwebdriveradapter": "dev-master"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Leankoala\\RetrieverConnector\\": "src"
+    }
+  }
+}
