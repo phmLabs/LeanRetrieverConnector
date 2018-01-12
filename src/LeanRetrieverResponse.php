@@ -1,6 +1,6 @@
 <?php
 
-namespace phm\HttpWebdriverClient\Http\Client\HeadlessChrome;
+namespace Leankoala\RetrieverConnector;
 
 use phm\HttpWebdriverClient\Http\Client\Chrome\ChromeResponse;
 use phm\HttpWebdriverClient\Http\Response\CookieAwareResponse;
