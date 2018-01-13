@@ -42,7 +42,7 @@ class LeanRetrieverClient implements HttpClient
             $requestArray['user-agent'] = $request->getUserAgent();
         }
 
-        $leanRequest = new Request('GET', $this->leanRetrieverEndpoint, [], json_encode($request));
+        $leanRequest = new Request('GET', $this->leanRetrieverEndpoint, [], json_encode($requestArray));
 
         $response = $client->send($leanRequest);
 
