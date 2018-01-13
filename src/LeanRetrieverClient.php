@@ -47,7 +47,16 @@ class LeanRetrieverClient implements HttpClient
         $response = $client->send($leanRequest);
 
         $plainBody = (string)$response->getBody();
+
+        if (!$plainBody) {
+            throw new \RuntimeException('The returned value was empty.');
+        }
+
         $responseObj = json_decode($plainBody);
+
+        if (!$responseObj) {
+            throw new \RuntimeException('The returned value was not a valid json string.');
+        }
 
         if ($responseObj->status == 'error') {
             throw new \Exception($responseObj->message);
