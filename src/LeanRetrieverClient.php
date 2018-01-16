@@ -8,6 +8,7 @@ use phm\HttpWebdriverClient\Http\Client\HttpClient;
 use phm\HttpWebdriverClient\Http\Request\CacheAwareRequest;
 use phm\HttpWebdriverClient\Http\Request\UserAgentAwareRequest;
 use phm\HttpWebdriverClient\Http\Request\ViewportAwareRequest;
+use phm\HttpWebdriverClient\Http\Response\BrowserResponse;
 use Psr\Http\Message\RequestInterface;
 
 class LeanRetrieverClient implements HttpClient
@@ -69,7 +70,9 @@ class LeanRetrieverClient implements HttpClient
             throw new LeanRetrieverException($responseObj->message);
         }
 
+
         $browserResponse = unserialize($responseObj->serializedResponse);
+        /** @var BrowserResponse $browserResponse */
 
         return $browserResponse;
     }
