@@ -5,6 +5,7 @@ namespace Leankoala\RetrieverConnector;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use phm\HttpWebdriverClient\Http\Client\HttpClient;
+use phm\HttpWebdriverClient\Http\Request\CacheAwareRequest;
 use phm\HttpWebdriverClient\Http\Request\UserAgentAwareRequest;
 use phm\HttpWebdriverClient\Http\Request\ViewportAwareRequest;
 use Psr\Http\Message\RequestInterface;
@@ -29,6 +30,12 @@ class LeanRetrieverClient implements HttpClient
             'headers' => $request->getHeaders(),
             'method' => $request->getMethod()
         ];
+
+        if ($request instanceof CacheAwareRequest) {
+            $requestArray['allowCache'] = $request->isCacheAllowed();
+        } else {
+            $requestArray['allowCache'] = true;
+        }
 
         if ($request instanceof ViewportAwareRequest) {
             $viewport = $request->getViewport();
