@@ -11,6 +11,12 @@ use phm\HttpWebdriverClient\Http\Request\ViewportAwareRequest;
 use phm\HttpWebdriverClient\Http\Response\BrowserResponse;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * @todo test headers
+ *
+ * Class LeanRetrieverClient
+ * @package Leankoala\RetrieverConnector
+ */
 class LeanRetrieverClient implements HttpClient
 {
     const CLIENT_TYPE = 'LEANRETRIEVER_CLIENT';
