@@ -49,17 +49,17 @@ class LeanRetrieverClient implements HttpClient
         $plainBody = (string)$response->getBody();
 
         if (!$plainBody) {
-            throw new \RuntimeException('The returned value was empty.');
+            throw new LeanRetrieverException('The returned value was empty.');
         }
 
         $responseObj = json_decode($plainBody);
 
         if (!$responseObj) {
-            throw new \RuntimeException('The returned value was not a valid json string.');
+            throw new LeanRetrieverException('The returned value was not a valid json string.');
         }
 
         if ($responseObj->status == 'error') {
-            throw new \Exception($responseObj->message);
+            throw new LeanRetrieverException($responseObj->message);
         }
 
         $browserResponse = unserialize($responseObj->serializedResponse);
@@ -85,7 +85,7 @@ class LeanRetrieverClient implements HttpClient
 
     public function setOption($key, $value)
     {
-        throw new \RuntimeException('This function is not implemented yet');
+        throw new LeanRetrieverException('This function is not implemented yet');
     }
 
     public function close()

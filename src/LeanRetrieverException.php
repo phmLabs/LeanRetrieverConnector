@@ -2,7 +2,7 @@
 
 namespace Leankoala\RetrieverConnector;
 
-class LeanRetrieverException extends \Exception
+class LeanRetrieverException extends \RuntimeException
 {
 
 }
