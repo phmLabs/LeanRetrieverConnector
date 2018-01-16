@@ -1,6 +1,6 @@
 <?php
 
-namespace Leankoala\Retriever\Request;
+namespace Leankoala\RetrieverConnector;
 
 use GuzzleHttp\Psr7\Uri;
 use Leankoala\Devices\Viewport;
