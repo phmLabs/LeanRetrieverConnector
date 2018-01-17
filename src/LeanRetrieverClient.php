@@ -21,6 +21,8 @@ class LeanRetrieverClient implements HttpClient
 {
     const CLIENT_TYPE = 'LEANRETRIEVER_CLIENT';
 
+    const ENDPOINT_ENV_VAR = 'RETRIEVER_HOST';
+
     private $leanRetrieverEndpoint;
 
     public function __construct($leanRetreverEndpoint = 'http://localhost:8000')
@@ -61,6 +63,8 @@ class LeanRetrieverClient implements HttpClient
         $response = $client->send($leanRequest);
 
         $plainBody = (string)$response->getBody();
+
+        var_dump($plainBody);
 
         if (!$plainBody) {
             throw new LeanRetrieverException('The returned value was empty.');
@@ -107,5 +111,13 @@ class LeanRetrieverClient implements HttpClient
     public function close()
     {
 
+    }
+
+    public static function guessEndpoint()
+    {
+        if ($endpoint = getenv(self::ENDPOINT_ENV_VAR)) {
+            return $endpoint;
+        }
+        return 'http://localhost:8000';
     }
 }
