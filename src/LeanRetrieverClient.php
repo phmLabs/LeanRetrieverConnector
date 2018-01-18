@@ -64,8 +64,6 @@ class LeanRetrieverClient implements HttpClient
 
         $plainBody = (string)$response->getBody();
 
-        var_dump($plainBody);
-
         if (!$plainBody) {
             throw new LeanRetrieverException('The returned value was empty.');
         }
