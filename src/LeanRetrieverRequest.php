@@ -50,7 +50,7 @@ class LeanRetrieverRequest extends BrowserRequest implements TimeoutAwareRequest
         }
 
         $url = new Uri(self::setIfExists('url', $rawRequestObj));
-        $method = self::setIfExists('user-agent', $rawRequestObj, BrowserRequest::METHOD_GET);
+        $method = self::setIfExists('method', $rawRequestObj, BrowserRequest::METHOD_GET);
         $userAgent = self::setIfExists('user-agent', $rawRequestObj, false, false);
         $timeout = self::setIfExists('timeout', $rawRequestObj, self::DEFAULT_TIMEOUT);
         $headers = self::setIfExists('headers', $rawRequestObj, false, false);
