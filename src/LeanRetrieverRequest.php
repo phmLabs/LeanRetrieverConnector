@@ -35,28 +35,16 @@ class LeanRetrieverRequest extends BrowserRequest implements TimeoutAwareRequest
         }
     }
 
-    /**
-     * Create a LeanRetrieverRequest user the raw POST body as JSON
-     *
-     * @return LeanRetrieverRequest
-     */
-    public static function fromPost()
+    public static function fromArray($requestArray)
     {
-        $rawRequest = file_get_contents("php://input");
-        $rawRequestObj = json_decode($rawRequest, true);
+        $url = new Uri(self::setIfExists('url', $requestArray));
+        $method = self::setIfExists('method', $requestArray, BrowserRequest::METHOD_GET);
+        $userAgent = self::setIfExists('user-agent', $requestArray, false, false);
+        $timeout = self::setIfExists('timeout', $requestArray, self::DEFAULT_TIMEOUT);
+        $headers = self::setIfExists('headers', $requestArray, false, false);
 
-        if (!$rawRequestObj) {
-            throw new \RuntimeException('The given JSON string is not valid');
-        }
-
-        $url = new Uri(self::setIfExists('url', $rawRequestObj));
-        $method = self::setIfExists('method', $rawRequestObj, BrowserRequest::METHOD_GET);
-        $userAgent = self::setIfExists('user-agent', $rawRequestObj, false, false);
-        $timeout = self::setIfExists('timeout', $rawRequestObj, self::DEFAULT_TIMEOUT);
-        $headers = self::setIfExists('headers', $rawRequestObj, false, false);
-
-        $viewport = self::setIfExists('viewport', $rawRequestObj, false, false);
-        $allowCache = self::setIfExists('allowCache', $rawRequestObj, true, false);
+        $viewport = self::setIfExists('viewport', $requestArray, false, false);
+        $allowCache = self::setIfExists('allowCache', $requestArray, true, false);
 
         $request = new self($method, $url);
 
@@ -77,6 +65,25 @@ class LeanRetrieverRequest extends BrowserRequest implements TimeoutAwareRequest
 
         $request->setTimeout($timeout);
         $request->setIsCacheAllowed($allowCache);
+
+        return $request;
+    }
+
+    /**
+     * Create a LeanRetrieverRequest user the raw POST body as JSON
+     *
+     * @return LeanRetrieverRequest
+     */
+    public static function fromPost()
+    {
+        $rawRequest = file_get_contents("php://input");
+        $requestArray = json_decode($rawRequest, true);
+
+        if (!$requestArray) {
+            throw new \RuntimeException('The given JSON string is not valid');
+        }
+
+        $request = self::fromArray($requestArray);
 
         return $request;
     }
