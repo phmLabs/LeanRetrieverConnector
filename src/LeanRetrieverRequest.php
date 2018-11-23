@@ -3,6 +3,8 @@
 namespace Leankoala\RetrieverConnector;
 
 use GuzzleHttp\Psr7\Uri;
+use Leankoala\Devices\DeviceFactory;
+use Leankoala\Devices\SimpleDevice;
 use Leankoala\Devices\Viewport;
 use phm\HttpWebdriverClient\Http\Request\BrowserRequest;
 use phm\HttpWebdriverClient\Http\Request\TimeoutAwareRequest;
@@ -45,6 +47,7 @@ class LeanRetrieverRequest extends BrowserRequest implements TimeoutAwareRequest
 
         $viewport = self::setIfExists('viewport', $requestArray, false, false);
         $allowCache = self::setIfExists('allowCache', $requestArray, true, false);
+        $deviceName = self::setIfExists('deviceName', $requestArray, null, false);
 
         $request = new self($method, $url);
 
@@ -58,7 +61,11 @@ class LeanRetrieverRequest extends BrowserRequest implements TimeoutAwareRequest
             }
         }
 
-        if ($viewport) {
+        if ($deviceName) {
+            $factory = new DeviceFactory();
+            $device = $factory->create($deviceName);
+            $request->setDevice($device);
+        } else if ($viewport) {
             $viewport = new Viewport($viewport['height'], $viewport['width']);
             $request->setViewport($viewport);
         }
