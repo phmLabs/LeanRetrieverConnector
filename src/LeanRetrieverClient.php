@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use phm\HttpWebdriverClient\Http\Client\HttpClient;
 use phm\HttpWebdriverClient\Http\Request\CacheAwareRequest;
+use phm\HttpWebdriverClient\Http\Request\DeviceAwareRequest;
 use phm\HttpWebdriverClient\Http\Request\UserAgentAwareRequest;
 use phm\HttpWebdriverClient\Http\Request\ViewportAwareRequest;
 use phm\HttpWebdriverClient\Http\Response\BrowserResponse;
@@ -54,6 +55,10 @@ class LeanRetrieverClient implements HttpClient
             ];
         }
 
+        if ($request instanceof DeviceAwareRequest) {
+            $requestArray['deviceName'] = $request->getDevice()->getName();
+        }
+
         if ($request instanceof UserAgentAwareRequest) {
             $requestArray['user-agent'] = $request->getUserAgent();
         }
@@ -77,7 +82,6 @@ class LeanRetrieverClient implements HttpClient
         if ($responseObj->status == 'error') {
             throw new LeanRetrieverException($responseObj->message);
         }
-
 
         $browserResponse = unserialize($responseObj->serializedResponse);
         /** @var BrowserResponse $browserResponse */
