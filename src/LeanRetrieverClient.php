@@ -85,7 +85,7 @@ class LeanRetrieverClient implements HttpClient
         if ($request instanceof DeviceAwareRequest) {
             $attachedRequest = $browserResponse->getRequest();
             if ($attachedRequest instanceof DeviceAwareRequest) {
-                $browserResponse->getRequest()->setDevice($attachedRequest);
+                $browserResponse->getRequest()->setDevice($attachedRequest->getDevice());
             }
         }
 
