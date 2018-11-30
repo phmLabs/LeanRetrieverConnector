@@ -55,10 +55,6 @@ class LeanRetrieverClient implements HttpClient
             ];
         }
 
-        if ($request instanceof DeviceAwareRequest) {
-            $requestArray['deviceName'] = $request->getDevice()->getName();
-        }
-
         if ($request instanceof UserAgentAwareRequest) {
             $requestArray['user-agent'] = $request->getUserAgent();
         }
@@ -85,6 +81,13 @@ class LeanRetrieverClient implements HttpClient
 
         $browserResponse = unserialize($responseObj->serializedResponse);
         /** @var BrowserResponse $browserResponse */
+
+        if ($request instanceof DeviceAwareRequest) {
+            $attachedRequest = $browserResponse->getRequest();
+            if ($attachedRequest instanceof DeviceAwareRequest) {
+                $browserResponse->getRequest()->setDevice($attachedRequest);
+            }
+        }
 
         return $browserResponse;
     }
